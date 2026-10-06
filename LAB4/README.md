@@ -40,4 +40,4 @@ Tình huống và kết quả
 13	NSE smb-os-discovery	--script smb-os-discovery -p 445	Unix (Samba 3.0.20-Debian)	PASS
 14	NSE MS17-010	--script smb-vuln-ms17-010 -p 445	Không báo VULNERABLE, kết luận: chưa xác định	PASS
 15	Xuất kết quả	-oN, -oX, -oG, xsltproc	Có ket_qua.txt, ket_qua.xml, smb.txt, bao_cao.html	PASS
-16	Trước/sau hardening	-sV trước và sau	Chưa thực hiện	CHƯA
+
