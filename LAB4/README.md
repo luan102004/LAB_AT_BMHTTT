@@ -7,7 +7,7 @@ Lab: LAB 4 - Nmap
 Môi trường
 Thành phần	Phiên bản
 Máy thật	Windows 11
-Ảo hóa	Oracle VirtualBox [ĐIỀN phiên bản]
+Ảo hóa	Oracle VirtualBox 
 Máy quét	Kali Linux 2026.2, Nmap 7.99
 Máy đích	Metasploitable 2
 Mạng	VirtualBox Host-Only 192.168.56.0/24
