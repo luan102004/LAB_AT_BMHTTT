@@ -46,12 +46,12 @@ Internet ── WAN (Bridged, DHCP) ── [pfSense] ── LAN 10.0.0.0/8 (Host
 
 | Tình huống | Kết quả | Ghi chú |
 |---|---|---|
-| B9 – Rule LAN cơ bản (Pass LAN net → Any) | ... | Kiểm thử ping/DNS/HTTPS từ DC trước và sau khi Disable rule |
-| TH1 – Chặn ICMP, cho phép DNS/Web | ... | Rule Block ICMP phải nằm trên 2 rule Pass DNS/Web |
-| TH2 – Chỉ một host ra Internet (10.0.0.2) | ... | Cần VM LAN-Test (10.0.0.3) để đối chứng |
-| TH3 – Cô lập DMZ khỏi LAN | ... | So sánh baseline (Pass DMZ→Any) và sau khi thêm Block DMZ→LAN |
-| TH4 – Port Forward WAN → DMZ (IIS) | ... | Bỏ tick Block private/bogon networks trên WAN |
-| TH5 – Logging firewall rule | ... | Bật Log trên rule Block, kiểm tra Status → System Logs → Firewall |
+| B9 – Rule LAN cơ bản (Pass LAN net → Any) | Khi rule đang bật: ping 8.8.8.8, Resolve-DnsName example.com, curl.exe -4 https://example.com từ DC đều thành công. Sau khi Disable rule và Reset States: ping 8.8.8.8 mới thất bại (timeout) | Kiểm thử ping/DNS/HTTPS từ DC trước và sau khi Disable rule |
+| TH1 – Chặn ICMP, cho phép DNS/Web | ping 8.8.8.8 từ DC thất bại; Resolve-DnsName example.com -Server 8.8.8.8 và curl.exe -4 https://example.com thành công | Rule Block ICMP phải nằm trên 2 rule Pass DNS/Web |
+| TH2 – Chỉ một host ra Internet (10.0.0.2) | 10.0.0.2 (DC) ping 8.8.8.8 thành công; 10.0.0.3 (LAN-Test) ping 8.8.8.8 thất bại | Cần VM LAN-Test (10.0.0.3) để đối chứng |
+| TH3 – Cô lập DMZ khỏi LAN | Baseline (chỉ có Pass DMZ net → Any): DMZ-Web ping 10.0.0.2 thành công (có reply). Sau khi thêm Block DMZ net → LAN net (đặt trên rule Pass): DMZ-Web ping 10.0.0.2 thất bại, nhưng ping 8.8.8.8 từ DMZ-Web vẫn thành công | So sánh baseline (Pass DMZ→Any) và sau khi thêm Block DMZ→LAN |
+| TH4 – Port Forward WAN → DMZ (IIS) | Từ máy thật (hoặc WAN-Client), truy cập http://<IP-WAN-pfSense>:8080 hiển thị đúng trang mặc định của IIS chạy trên DMZ-Web (172.16.0.2:80) | Bỏ tick Block private/bogon networks trên WAN |
+| TH5 – Logging firewall rule | Sau khi tạo lưu lượng bị chặn (ví dụ ping khi đang Block ICMP ở TH1), vào Status → System Logs → Firewall thấy dòng log ghi rõ thời điểm, IP nguồn/đích, và tên rule đã chặn | Bật Log trên rule Block, kiểm tra Status → System Logs → Firewall |
 
 ## Lỗi gặp phải và cách khắc phục
 
